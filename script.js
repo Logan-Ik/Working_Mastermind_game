@@ -10,17 +10,31 @@ function generateSecretCode() {
         colors[Math.floor(Math.random() * colors.length)]
     );
 }
+// Function to start/reset the game
+function startGame() {
+  secretCode = generateSecretCode(); // generate new code
+  attempts = [];                     // clear previous guesses
+  feedbackContainer.innerHTML = "";  // clear feedback display
+  input.value = "";                  // clear input
+  // optionally reset UI elements like circles, etc.
+}
 
-const secretCode = generateSecretCode();
-console.log("Secret code:", secretCode); // debug
+// When “Play Again” button is clicked
+    const playAgainBtn = document.getElementById("playAgain");
+        playAgainBtn.addEventListener("click", () => {
+            startGame();
+});
+
+    const secretCode = generateSecretCode();
+        console.log("Secret code:", secretCode); // debug
 
 // 🔹 DOM elements
-const container = document.getElementById("container");
-const input = document.getElementById("guessInput");
-const button = document.getElementById("guessBtn");
-const overlay = document.getElementById("overlay");
-const resultText = document.getElementById("resultText");
-const secretText = document.getElementById("secretText");
+    const container = document.getElementById("container");
+    const input = document.getElementById("guessInput");
+    const button = document.getElementById("guessBtn");
+    const overlay = document.getElementById("overlay");
+    const resultText = document.getElementById("resultText");
+    const secretText = document.getElementById("secretText");
 
 button.addEventListener("click", makeGuess);
 
@@ -28,10 +42,10 @@ function makeGuess() {
     if (attempts >= maxAttempts) return;
 
     const guess = input.value
+        .trim()
         .toLowerCase()
-    .split(",")
-    .map(c => c.trim())
-    .filter(Boolean);
+        .split(/[\s,]+/)
+        .filter(Boolean);
 
     if (guess.length !== codeLength) {
         alert(`Enter exactly ${codeLength} colors`);
