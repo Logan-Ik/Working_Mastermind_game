@@ -23,3 +23,10 @@ self.addEventListener('activate', event => {
     })
   );
 });
+const FILES_TO_CACHE = [
+  "./",
+  "./styles.css",
+  "./script.js",
+  "./manifest.json"
+];
+
