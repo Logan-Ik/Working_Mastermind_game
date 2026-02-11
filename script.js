@@ -61,7 +61,7 @@ function makeGuess() {
   input.value = "";
 }
 
-// 🔹 Feedback logic (unchanged, correct)
+// 🔹 Feedback logic
 function getFeedback(guess, secretCode) {
   let greens = 0;
   let reds = 0;
