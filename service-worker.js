@@ -1,14 +1,25 @@
-self.addEventListener("fetch", event => {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      // Try cache first
-      if (response) return response;
+    fetch(event.request, { redirect: 'follow' }) // <- follow redirects
+      .catch(err => {
+        console.error('Fetch failed:', err);
+        return new Response('Network error occurred', {
+          status: 408,
+          headers: { 'Content-Type': 'text/plain' }
+        });
+      })
+  );
+});
+self.addEventListener('install', event => {
+  self.skipWaiting(); // activate immediately
+});
 
-      // If not in cache, try network
-      return fetch(event.request).catch(err => {
-        console.warn("Fetch failed for:", event.request.url, err);
-        return new Response("Network error", { status: 404 });
-      });
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => caches.delete(key)) // clear old caches
+      );
     })
   );
 });

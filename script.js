@@ -36,8 +36,19 @@ function startGame() {
     const resultText = document.getElementById("resultText");
     const secretText = document.getElementById("secretText");
 
+// 🔹 Event listener
 button.addEventListener("click", makeGuess);
 
+guessInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    // Prevent the default form submission (if inside a form)
+    event.preventDefault();
+    // Trigger the same function as the button click
+    guessBtn.click();
+  }
+});
+
+// 🔹 Main game logic
 function makeGuess() {
     if (attempts >= maxAttempts) return;
 
