@@ -1,6 +1,6 @@
 const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
 const codeLength = 4;
-const maxAttempts = 6;
+const maxAttempts = 10;
 
 let attempts = 0;
 
